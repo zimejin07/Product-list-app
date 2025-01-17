@@ -146,7 +146,7 @@ $font-large: 24px;
 :host-context(.gridView) {
   display: flex;
   flex-wrap: wrap;
-  margin: 8px;
+  margin: 0 -8px;
 
   @media screen and (max-width: 520px) {
     & {
@@ -159,7 +159,7 @@ $font-large: 24px;
   }
 
   .products-row {
-    margin: 8px;
+    margin: 12px;
     width: 100%;
     background-color: var(--app-content-secondary-color);
     padding: 8px;
@@ -176,7 +176,6 @@ $font-large: 24px;
         display: flex;
       }
     }
-
 
     .cell-more-button {
       border: none;
