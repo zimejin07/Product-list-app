@@ -2,13 +2,13 @@ import {Component, Input} from '@angular/core';
 import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'app-product-card',
+  selector: 'app-product',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './product-card.component.html',
-  styleUrl: './product-card.component.scss',
+  templateUrl: './products.component.html',
+  styleUrl: './products.component.scss',
 })
-export class ProductCardComponent {
+export class ProductsComponent {
   @Input() context: string = '';
   @Input() product!: {
     imageUrl: string;
