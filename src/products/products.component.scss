@@ -58,7 +58,9 @@ $font-large: 24px;
 
     @media screen and (max-width: 520px) {
       & {
-        &.category, &.sales {
+
+        &.category,
+        &.sales {
           display: none;
         }
 
@@ -66,7 +68,8 @@ $font-large: 24px;
           flex: 0.4;
         }
 
-        &.stock, &.price {
+        &.stock,
+        &.price {
           flex: 0.2;
         }
       }

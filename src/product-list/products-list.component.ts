@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CommonModule} from "@angular/common";
-import {Product} from "../product-model/product-model";
-import {ProductsComponent} from "../products/products.component";
-import {RouterLink} from "@angular/router";
-import {GraphqlService} from "../graphql.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Product } from "../product-model/product-model";
+import { ProductsComponent } from "../products/products.component";
+import { RouterLink } from "@angular/router";
+import { GraphqlService } from "../graphql.service";
 
 @Component({
     selector: 'app-products-list',
@@ -16,16 +16,16 @@ export class ProductsListComponent implements OnInit {
     @Input() viewType: 'gridView' | 'tableView' = 'gridView';
     products: Product[] = [];
 
-    constructor(private graphqlService: GraphqlService) {}
+    constructor(private graphqlService: GraphqlService) { }
 
     ngOnInit() {
-        this.fetchProducts('furniture');
+        this.fetchProducts('Furniture');
     }
 
     fetchProducts(category?: string) {
         this.graphqlService.getProducts(category).subscribe((response: any) => {
-            console.log("API response for fetch products ==> ", response);
             this.products = response.data.products;
+            console.log("product", this.products);
         });
     }
 }

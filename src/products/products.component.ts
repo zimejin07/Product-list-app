@@ -1,5 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {CommonModule} from "@angular/common";
+import { Component, Input } from '@angular/core';
+import { CommonModule } from "@angular/common";
+import { Product } from "../product-model/product-model";
 
 @Component({
   selector: 'app-product',
@@ -10,13 +11,5 @@ import {CommonModule} from "@angular/common";
 })
 export class ProductsComponent {
   @Input() context: string = '';
-  @Input() product!: {
-    imageUrl: string;
-    name: string;
-    category: string;
-    status: string;
-    sales: number;
-    stock: number;
-    price: number;
-  };
+  @Input() product!: Product;
 }
