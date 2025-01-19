@@ -19,6 +19,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Ocean",
       category: "Furniture",
+      description:  '',
       status: "Active",
       sales: 11,
       stock: 36,
@@ -28,6 +29,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Lou",
       category: "Kitchen",
+      description:  '',
       status: "Disabled",
       sales: 6,
       stock: 46,
@@ -37,6 +39,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Yellow",
       category: "Decoration",
+      description:  '',
       status: "Active",
       sales: 61,
       stock: 56,
@@ -46,6 +49,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Dreamy",
       category: "Bedroom",
+      description:  '',
       status: "Disabled",
       sales: 41,
       stock: 66,
@@ -55,6 +59,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Boheme",
       category: "Furniture",
+      description:  '',
       status: "Active",
       sales: 32,
       stock: 40,
@@ -64,6 +69,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Sky",
       category: "Bathroom",
+      description:  '',
       status: "Disabled",
       sales: 22,
       stock: 44,
@@ -73,6 +79,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Midnight",
       category: "Furniture",
+      description:  '',
       status: "Active",
       sales: 23,
       stock: 45,
@@ -82,6 +89,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Palm",
       category: "Decoration",
+      description:  '',
       status: "Active",
       sales: 24,
       stock: 46,
@@ -91,6 +99,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Forest",
       category: "Living Room",
+      description:  '',
       status: "Active",
       sales: 41,
       stock: 16,
@@ -100,6 +109,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Sand",
       category: "Living Room",
+      description:  '',
       status: "Disabled",
       sales: 52,
       stock: 16,
@@ -109,6 +119,7 @@ export class ProductsListComponent implements OnInit {
     {
       name: "Autumn",
       category: "Decoration",
+      description:  '',
       status: "Active",
       sales: 21,
       stock: 46,
