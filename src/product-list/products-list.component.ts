@@ -19,7 +19,7 @@ export class ProductsListComponent implements OnInit {
     constructor(private graphqlService: GraphqlService) { }
 
     ngOnInit() {
-        this.fetchProducts('Furniture');
+        this.fetchProducts();
     }
 
     fetchProducts(category?: string) {

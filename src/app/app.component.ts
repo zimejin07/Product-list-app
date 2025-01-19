@@ -23,10 +23,11 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.graphqlService.getCategories().subscribe((response: any) => {
-            console.log("Response from endpoint: ", response);
-            this.categories = response.data.categories;
-        });
+        this.graphqlService.getCategories()
+            .subscribe((response: any) => {
+                console.log("Categories", response);
+                this.categories = response.data.categories;
+            });
     }
 
     switchView = (viewType: 'grid' | 'list') => {
@@ -53,15 +54,8 @@ export class AppComponent implements OnInit {
 
         if (selectedCategory !== null) {
             this.selectedCategory = selectedCategory;
-            this.fetchProducts(selectedCategory);
         } else {
             console.warn("Selected value is null");
         }
-    }
-
-    fetchProducts(category?: string) {
-        this.graphqlService.getProducts(category).subscribe((response: any) => {
-            this.products = response.data.products;
-        });
     }
 }
