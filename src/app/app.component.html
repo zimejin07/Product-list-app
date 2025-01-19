@@ -93,12 +93,11 @@
                     </button>
                     <div [ngClass]="{ active: isFilterMenuActive }" class="filter-menu">
                         <label>Category</label>
-                        <select>
+                        <select (change)="onCategoryChange($event)">
                             <option>All Categories</option>
-                            <option>Furniture</option>
-                            <option>Decoration</option>
-                            <option>Kitchen</option>
-                            <option>Bathroom</option>
+                            <option *ngFor="let category of categories" [value]="category.name">
+                                {{ category.name }}
+                            </option>
                         </select>
                         <label>Status</label>
                         <select>

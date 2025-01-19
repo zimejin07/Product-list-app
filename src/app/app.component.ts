@@ -1,6 +1,7 @@
-import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {CommonModule} from "@angular/common";
+import { Component, OnInit } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { CommonModule } from "@angular/common";
+import { GraphqlService } from "../graphql.service";
 
 @Component({
     selector: 'app-root',
@@ -8,12 +9,24 @@ import {CommonModule} from "@angular/common";
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     viewType: "gridView" | "tableView" = 'gridView';
     isLightMode = false;
     isFilterMenuActive = false;
 
-    constructor() {
+    categories: any[] = [];
+
+    selectedCategory: string | undefined;
+    products: any[] = [];
+
+    constructor(private graphqlService: GraphqlService) {
+    }
+
+    ngOnInit() {
+        this.graphqlService.getCategories().subscribe((response: any) => {
+            console.log("Response from endpoint: ", response);
+            this.categories = response.data.categories;
+        });
     }
 
     switchView = (viewType: 'grid' | 'list') => {
@@ -32,5 +45,23 @@ export class AppComponent {
 
     toggleFilterMenu() {
         this.isFilterMenuActive = !this.isFilterMenuActive;
+    }
+
+    onCategoryChange(event: Event) {
+        const selectElement = event.target as HTMLSelectElement;
+        const selectedCategory = selectElement.value;
+
+        if (selectedCategory !== null) {
+            this.selectedCategory = selectedCategory;
+            this.fetchProducts(selectedCategory);
+        } else {
+            console.warn("Selected value is null");
+        }
+    }
+
+    fetchProducts(category?: string) {
+        this.graphqlService.getProducts(category).subscribe((response: any) => {
+            this.products = response.data.products;
+        });
     }
 }

@@ -23,7 +23,7 @@
         </button></div>
     </div>
     <app-product
-            *ngFor="let product of mockProductList"
+            *ngFor="let product of products"
             [product]="product"
             [context]="viewType"
             [routerLink]="['/product-details', product]">
