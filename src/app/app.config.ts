@@ -13,16 +13,7 @@ export const appConfig: ApplicationConfig = {
 
       return {
         link: httpLink.create({
-          uri: '<%= endpoint %>',
-        }),
-        cache: new InMemoryCache(),
-      };
-    }), provideHttpClient(), provideApollo(() => {
-      const httpLink = inject(HttpLink);
-
-      return {
-        link: httpLink.create({
-          uri: '<%= endpoint %>',
+          uri: 'https://ap-south-1.cdn.hygraph.com/content/cm627qhvl00v207wc3yms10e3/master',
         }),
         cache: new InMemoryCache(),
       };
