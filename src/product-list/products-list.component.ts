@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { CommonModule } from "@angular/common";
 import { Product } from "../product-model/product-model";
 import { ProductsComponent } from "../products/products.component";
@@ -12,11 +12,17 @@ import { GraphqlService } from "../graphql.service";
     templateUrl: './products-list.component.html',
     styleUrls: ['./products-list.component.scss']
 })
-export class ProductsListComponent implements OnInit {
-    @Input() viewType: 'gridView' | 'tableView' = 'gridView';
+export class ProductsListComponent implements OnInit, OnDestroy {
+    viewType: 'gridView' | 'tableView' = 'tableView';
     products: Product[] = [];
 
-    constructor(private graphqlService: GraphqlService) { }
+
+
+    constructor(private graphqlService: GraphqlService) {
+        this.graphqlService.viewType$.subscribe((viewType) => {
+            this.viewType = viewType as 'gridView' | 'tableView';
+        })
+    }
 
     ngOnInit() {
         this.fetchProducts();
@@ -26,6 +32,11 @@ export class ProductsListComponent implements OnInit {
         this.graphqlService.getProducts(category).subscribe((response: any) => {
             this.products = response.data.products;
         });
+    };
+
+
+    ngOnDestroy() {
+
     }
 }
 

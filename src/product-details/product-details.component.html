@@ -21,6 +21,10 @@
                 <li><strong>Price:</strong> ${{ selectedProduct.price }}</li>
             </ul>
             <button class="btn primary">Buy Now</button>
+
+            <div class="countdown" *ngIf="countdownText">
+                <p>Order within <span class="countdown-timer">{{ countdownText }}</span> to get it delivered tomorrow!</p>
+            </div>
         </div>
     </ng-container>
 </div>

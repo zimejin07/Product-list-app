@@ -10,7 +10,6 @@ import { GraphqlService } from "../graphql.service";
     styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-    viewType: "gridView" | "tableView" = 'gridView';
     isLightMode = false;
     isFilterMenuActive = false;
 
@@ -29,8 +28,8 @@ export class AppComponent implements OnInit {
             });
     }
 
-    switchView = (viewType: 'grid' | 'list') => {
-        this.viewType = viewType === 'grid' ? 'gridView' : 'tableView';
+    switchView = (viewType: 'gridView' | 'tableView') => {
+        this.graphqlService.viewType$.next(viewType);
     };
 
     toggleMode() {

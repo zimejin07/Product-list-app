@@ -1,9 +1,9 @@
-import { Component, OnDestroy } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { GraphqlService } from "../graphql.service";
 import { Product } from "../product-model/product-model";
-import { Subscription } from 'rxjs';
+import {interval, map, Subscription} from 'rxjs';
 import { ApolloQueryResult } from '@apollo/client/core';
 import { ApiResponse } from '../product-model/model';
 
@@ -14,11 +14,14 @@ import { ApiResponse } from '../product-model/model';
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.scss'
 })
-export class ProductDetailsComponent implements OnDestroy {
+export class ProductDetailsComponent implements OnInit, OnDestroy {
     productId!: string;
     selectedProduct: Product | undefined;
     categoryProducts: Product[] = [];
     private productSubscription!: Subscription;
+
+    countdownText: string = '';
+    private countdownSubscription!: Subscription;
 
     constructor(private route: ActivatedRoute, private graphqlService: GraphqlService) {
         this.route.paramMap.subscribe((params) => {
@@ -27,6 +30,9 @@ export class ProductDetailsComponent implements OnDestroy {
         })
     }
 
+    ngOnInit() {
+        this.startCountdownToMidnight();
+    }
 
     fetchProductDetails() {
         this.productSubscription = this.graphqlService.getProductDetails(this.productId).subscribe({
@@ -40,9 +46,40 @@ export class ProductDetailsComponent implements OnDestroy {
         });
     }
 
+    private startCountdownToMidnight() {
+        const midnight = new Date();
+        midnight.setHours(24, 0, 0, 0);
+        const midnightTime = midnight.getTime();
+
+        this.countdownSubscription = interval(1000)
+            .pipe(
+                map(() => {
+                    const now = Date.now();
+                    const diff = midnightTime - now;
+
+                    if (diff <= 0) {
+                        return 'Offer expired!';
+                    }
+
+                    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                    const minutes = Math.floor((diff / (1000 * 60)) % 60);
+                    const seconds = Math.floor((diff / 1000) % 60);
+
+                    return `${hours}h ${minutes}m ${seconds}s`;
+                })
+            )
+            .subscribe((text) => {
+                this.countdownText = text;
+            });
+    }
+
     ngOnDestroy() {
         if (this.productSubscription) {
             this.productSubscription.unsubscribe();
+        }
+
+        if (this.countdownSubscription) {
+            this.countdownSubscription.unsubscribe();
         }
     }
 

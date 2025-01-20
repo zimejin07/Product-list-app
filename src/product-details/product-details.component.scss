@@ -1,3 +1,7 @@
+$font-small: 14px;
+$font-medium: 16px;
+$font-large: 24px;
+
 .product-details-container {
   display: flex;
   gap: 32px;
@@ -58,6 +62,19 @@
     }
   }
 }
+
+.countdown {
+  margin-top: 16px;
+  font-size: $font-medium;
+  color: var(--action-color);
+  text-align: center;
+
+  .countdown-timer {
+    font-weight: bold;
+    color: var(--success-color);
+  }
+}
+
 
 .similar-items {
   margin-top: 32px;
