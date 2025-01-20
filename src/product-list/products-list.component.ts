@@ -28,13 +28,13 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.fetchProducts();
-
         this.categorySubscription = this.categoryService.category$.subscribe(
             (category) => {
                 this.selectedCategory = category;
                 if (this.selectedCategory) {
                     this.fetchProductsByCategory(this.selectedCategory);
+                } else {
+                    this.fetchProducts();
                 }
             }
         );

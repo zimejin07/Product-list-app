@@ -33,7 +33,7 @@ export class AppComponent implements OnInit {
         this.graphqlService.viewType$.next(viewType);
     };
 
-    onCategorySelect(category: string) {
+    private onCategorySelect(category: string) {
         // Update the selected category in the shared service
         this.categoryService.setCategory(category);
     }
