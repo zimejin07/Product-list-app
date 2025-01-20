@@ -4,6 +4,8 @@ import { Product } from "../product-model/product-model";
 import { ProductsComponent } from "../products/products.component";
 import { RouterLink } from "@angular/router";
 import { GraphqlService } from "../graphql.service";
+import {CategoryService} from "../category.service";
+import {Subscription} from "rxjs";
 
 @Component({
     selector: 'app-products-list',
@@ -16,9 +18,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     viewType: 'gridView' | 'tableView' = 'tableView';
     products: Product[] = [];
 
+    selectedCategory: string | null = null;
+    private categorySubscription!: Subscription;
 
-
-    constructor(private graphqlService: GraphqlService) {
+    constructor(private graphqlService: GraphqlService, private categoryService: CategoryService) {
         this.graphqlService.viewType$.subscribe((viewType) => {
             this.viewType = viewType as 'gridView' | 'tableView';
         })
@@ -26,6 +29,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.fetchProducts();
+
+        this.categorySubscription = this.categoryService.category$.subscribe(
+            (category) => {
+                this.selectedCategory = category;
+                if (this.selectedCategory) {
+                    this.fetchProductsByCategory(this.selectedCategory);
+                }
+            }
+        );
     }
 
     fetchProducts(category?: string) {
@@ -33,10 +45,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
             this.products = response.data.products;
         });
     };
-
+    fetchProductsByCategory(category: string) {
+        console.log(`Fetching products for category: ${category}`);
+        this.fetchProducts(category);
+    }
 
     ngOnDestroy() {
-
+        if (this.categorySubscription) {
+            this.categorySubscription.unsubscribe();
+        }
     }
 }
 
