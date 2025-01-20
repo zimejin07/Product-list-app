@@ -84,6 +84,7 @@ export class GraphqlService {
               name
               state
               sales
+              description
               stock
               price
               image {
