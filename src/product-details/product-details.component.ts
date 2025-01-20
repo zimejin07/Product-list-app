@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from "@angular/router";
+import { Component, OnDestroy } from '@angular/core';
+import { ActivatedRoute, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { GraphqlService } from "../graphql.service";
 import { Product } from "../product-model/product-model";
@@ -10,26 +10,23 @@ import { ApiResponse } from '../product-model/model';
 @Component({
     selector: 'app-product-details',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, RouterLink],
     templateUrl: './product-details.component.html',
     styleUrl: './product-details.component.scss'
 })
-export class ProductDetailsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ProductDetailsComponent implements OnDestroy {
     productId!: string;
     selectedProduct: Product | undefined;
     categoryProducts: Product[] = [];
     private productSubscription!: Subscription;
 
     constructor(private route: ActivatedRoute, private graphqlService: GraphqlService) {
-        this.route.paramMap.subscribe((params) => this.productId = String(params.get('id')));
+        this.route.paramMap.subscribe((params) => {
+            this.productId = String(params.get('id'))
+            this.fetchProductDetails();
+        })
     }
 
-    ngOnInit() {
-        this.fetchProductDetails();
-    }
-
-    ngAfterViewInit() {
-    }
 
     fetchProductDetails() {
         this.productSubscription = this.graphqlService.getProductDetails(this.productId).subscribe({

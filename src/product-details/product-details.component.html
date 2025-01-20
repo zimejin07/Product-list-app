@@ -29,10 +29,10 @@
     <h3 class="similar-items-title">Similar Items</h3>
     <ng-container *ngIf="categoryProducts.length">
         <ul class="similar-items-list">
-            <li *ngFor="let product of categoryProducts">
-                <img [alt]="product.name" [src]="product.image.url" />
-                <span class="similar-item-name">{{ product.name }}</span>
-            </li>
+          <li *ngFor="let product of categoryProducts" [routerLink]="['/product', product.name]">
+            <img [alt]="product.name" [src]="product.image.url" />
+            <span class="similar-item-name">{{ product.name }}</span>
+          </li>
         </ul>
     </ng-container>
 </div>
