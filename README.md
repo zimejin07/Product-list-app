@@ -13,11 +13,11 @@
 - RxJS 👌
 - Git 👌
 
-Light and Dark Mode 🕶️
-Filter by Category 🚀
-24hr Count Down ⏰
-Grid and Table Layout 🚀
-Related Products in category 🚀
+- Filter by Category 🚀
+- 24hr Count Down ⏰
+- Grid and Table Layout 🚀
+- Related Products in category 🚀
+- Light and Dark Mode 
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.0.6.
 
