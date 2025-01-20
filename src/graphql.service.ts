@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
-import {gql} from "@apollo/client/core";
+import {ApolloQueryResult, gql} from "@apollo/client/core";
 import {Apollo} from "apollo-angular";
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -75,4 +76,37 @@ export class GraphqlService {
             }
         }).valueChanges;
     }
+
+    getProductDetails(productName: string):Observable<ApolloQueryResult<unknown>> {
+        const PRODUCT_BY_NAME_QUERY = gql`
+          query GetProductByName($name: String!) {
+            products(where: { name: $name }) {
+              name
+              state
+              sales
+              stock
+              price
+              image {
+                url
+              }
+              category {
+                name
+              }
+            }
+          }
+        `;
+    
+        const variables = { name: productName };
+    
+        return this.apollo.watchQuery({
+            query: PRODUCT_BY_NAME_QUERY,
+            variables,
+            context: {
+                headers: {
+                    Authorization: `Bearer ${this.token}`
+                }
+            }
+        }).valueChanges;
+    }
+    
 }

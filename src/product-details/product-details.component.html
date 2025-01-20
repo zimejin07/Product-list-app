@@ -1,41 +1,38 @@
 <div class="product-details-container">
-    <div class="product-image">
-        <img alt="Modern Sofa"
-            src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" />
-    </div>
-    <div class="product-info">
-        <h2 class="product-title">Modern Sofa</h2>
-        <p class="product-description">
-            A beautifully crafted modern sofa made with premium materials. Ideal for enhancing the aesthetics of your
-            living room.
-        </p>
-        <ul class="product-meta">
-            <li><strong>Category:</strong> Furniture</li>
-            <li><strong>Status:</strong> Active</li>
-            <li><strong>Stock:</strong> 36</li>
-            <li><strong>Price:</strong> $850</li>
-        </ul>
-        <button class="btn primary">Buy Now</button>
-    </div>
+    <ng-container *ngIf="selectedProduct">
+       <div class="product-image">
+         <img
+           *ngIf="selectedProduct.image.url"
+           [alt]="selectedProduct.name || 'Product Image'"
+           [src]="selectedProduct.image.url"
+           loading="lazy"
+         >
+       </div>
+
+        <div class="product-info">
+            <h2 class="product-title">{{ selectedProduct.name }}</h2>
+            <p class="product-description">
+                {{ selectedProduct.description }}
+            </p>
+            <ul class="product-meta">
+                <li><strong>Category:</strong> {{ selectedProduct.category.name }}</li>
+                <li><strong>Status:</strong> {{ selectedProduct.state }}</li>
+                <li><strong>Stock:</strong> {{ selectedProduct.stock }}</li>
+                <li><strong>Price:</strong> ${{ selectedProduct.price }}</li>
+            </ul>
+            <button class="btn primary">Buy Now</button>
+        </div>
+    </ng-container>
 </div>
 
 <div class="similar-items">
     <h3 class="similar-items-title">Similar Items</h3>
-    <ul class="similar-items-list">
-        <li>
-            <img alt="Elegant Chair"
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" />
-            <span class="similar-item-name">Elegant Chair</span>
-        </li>
-        <li>
-            <img alt="Wooden Table"
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" />
-            <span class="similar-item-name">Wooden Table</span>
-        </li>
-        <li>
-            <img alt="Decorative Lamp"
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80" />
-            <span class="similar-item-name">Decorative Lamp</span>
-        </li>
-    </ul>
+    <ng-container *ngIf="categoryProducts.length">
+        <ul class="similar-items-list">
+            <li *ngFor="let product of categoryProducts">
+                <img [alt]="product.name" [src]="product.image.url" />
+                <span class="similar-item-name">{{ product.name }}</span>
+            </li>
+        </ul>
+    </ng-container>
 </div>

@@ -25,7 +25,6 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.graphqlService.getCategories()
             .subscribe((response: any) => {
-                console.log("Categories", response);
                 this.categories = response.data.categories;
             });
     }

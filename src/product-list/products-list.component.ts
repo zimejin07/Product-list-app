@@ -25,7 +25,6 @@ export class ProductsListComponent implements OnInit {
     fetchProducts(category?: string) {
         this.graphqlService.getProducts(category).subscribe((response: any) => {
             this.products = response.data.products;
-            console.log("product", this.products);
         });
     }
 }
