@@ -61,7 +61,7 @@ $font-large: 24px;
         background-color: var(--sidebar-active-link);
 
         &:before {
-          content: '';
+          content: "";
           position: absolute;
           right: 0;
           background-color: var(--action-color);
@@ -180,7 +180,7 @@ $font-large: 24px;
     border-radius: 4px;
     height: 32px;
     padding: 0 16px;
-    transition: .2s;
+    transition: 0.2s;
     cursor: pointer;
 
     &:hover {
@@ -231,16 +231,16 @@ $font-large: 24px;
   border-radius: 4px;
   padding: 0px 10px 0px 32px;
   height: 32px;
-  @include searchIcon('fff');
+  @include searchIcon("fff");
   background-size: 16px;
   background-repeat: no-repeat;
   background-position: left 10px center;
   width: 100%;
   max-width: 320px;
-  transition: .2s;
+  transition: 0.2s;
 
   .light & {
-    @include searchIcon('1f1c2e');
+    @include searchIcon("1f1c2e");
   }
 
   &::placeholder {
@@ -249,13 +249,13 @@ $font-large: 24px;
 
   &:hover {
     border-color: var(--action-color-hover);
-    @include searchIcon('6291fd');
+    @include searchIcon("6291fd");
   }
 
   &:focus {
     outline: none;
     border-color: var(--action-color);
-    @include searchIcon('2869ff');
+    @include searchIcon("2869ff");
   }
 }
 
@@ -279,7 +279,8 @@ $font-large: 24px;
     border-color: var(--action-color-hover);
   }
 
-  &:focus, &.active {
+  &:focus,
+  &.active {
     outline: none;
     color: var(--action-color);
     border-color: var(--action-color);
@@ -307,10 +308,10 @@ $font-large: 24px;
 
   visibility: hidden;
   opacity: 0;
-  transition: .2s;
+  transition: 0.2s;
 
   &:before {
-    content: '';
+    content: "";
     position: absolute;
     width: 0;
     height: 0;
@@ -338,7 +339,7 @@ $font-large: 24px;
 
   select {
     appearance: none;
-    @include arrowDown('fff');
+    @include arrowDown("fff");
     background-repeat: no-repeat;
     padding: 8px 24px 8px 8px;
     background-position: right 4px center;
@@ -355,18 +356,19 @@ $font-large: 24px;
     }
 
     .light & {
-      @include arrowDown('1f1c2e');
+      @include arrowDown("1f1c2e");
     }
 
     &:hover {
       border-color: var(--action-color-hover);
     }
 
-    &:focus, &.active {
+    &:focus,
+    &.active {
       outline: none;
       color: var(--action-color);
       border-color: var(--action-color);
-      @include arrowDown('2869ff');
+      @include arrowDown("2869ff");
     }
   }
 }

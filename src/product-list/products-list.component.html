@@ -40,7 +40,18 @@
                 </svg>
             </button></div>
     </div>
-    <app-product *ngFor="let product of products" [product]="product" [context]="viewType"
-        [routerLink]="['/product', product.name]">
-    </app-product>
+   <ng-container *ngIf="products?.length; else noProducts">
+     <app-product 
+       *ngFor="let product of products; trackBy: trackByProductName"
+       [product]="product" 
+       [context]="viewType"
+       [routerLink]="['/product', product.name]">
+     </app-product>
+   </ng-container>
+   
+   <ng-template #noProducts>
+     <!-- Providing a fallback UI when products are not available -->
+     <p>No products available.</p>
+   </ng-template>
+   
 </div>

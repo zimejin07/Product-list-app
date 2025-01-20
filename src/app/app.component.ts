@@ -1,66 +1,89 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { GraphqlService } from "../graphql.service";
-import {CategoryService} from "../category.service";
+import { GraphqlService } from "../services/graphql.service";
+import { CategoryService } from "../services/category.service";
+import { catchError, of } from "rxjs";
 
 @Component({
-    selector: 'app-root',
-    imports: [CommonModule, RouterOutlet],
-    templateUrl: './app.component.html',
-    styleUrl: './app.component.scss'
+  selector: "app-root",
+  imports: [CommonModule, RouterOutlet],
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.scss",
 })
 export class AppComponent implements OnInit {
-    isLightMode = false;
-    isFilterMenuActive = false;
+  isLightMode = false;
+  isFilterMenuActive = false;
+  categories: any[] = [];
+  selectedCategory: string | undefined;
+  products: any[] = [];
 
-    categories: any[] = [];
+  constructor(
+    private graphqlService: GraphqlService,
+    private categoryService: CategoryService
+  ) {}
 
-    selectedCategory: string | undefined;
-    products: any[] = [];
-
-    constructor(private graphqlService: GraphqlService, private categoryService: CategoryService) {
+  private onCategorySelect(category: string): void {
+    if (category) {
+      this.categoryService.setCategory(category);
+    } else {
+      console.warn("Invalid category selected");
     }
+  }
 
-    ngOnInit() {
-        this.graphqlService.getCategories()
-            .subscribe((response: any) => {
-                this.categories = response.data.categories;
-            });
+  switchView(viewType: "gridView" | "tableView"): void {
+    try {
+      this.graphqlService.viewType$.next(viewType);
+    } catch (error) {
+      console.error("Failed to switch view type", error);
     }
+  }
 
-    switchView = (viewType: 'gridView' | 'tableView') => {
-        this.graphqlService.viewType$.next(viewType);
-    };
+  toggleMode(): void {
+    this.isLightMode = !this.isLightMode;
+    document.documentElement.classList.toggle("light", this.isLightMode);
+  }
 
-    private onCategorySelect(category: string) {
-        // Update the selected category in the shared service
-        this.categoryService.setCategory(category);
+  toggleFilterMenu(): void {
+    this.isFilterMenuActive = !this.isFilterMenuActive;
+  }
+
+  onCategoryChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedCategory = selectElement.value;
+
+    if (selectedCategory) {
+      this.selectedCategory = selectedCategory;
+      this.onCategorySelect(this.selectedCategory);
+    } else {
+      console.warn("Selected value is null or invalid");
     }
+  }
 
-    toggleMode() {
-        this.isLightMode = !this.isLightMode;
-        const htmlElement = document.documentElement;
-        if (this.isLightMode) {
-            htmlElement.classList.add('light');
+  loadCategories(): void {
+    this.graphqlService
+      .getCategories()
+      .pipe(
+        catchError((error) => {
+          console.error("Error fetching categories", error);
+          return of({ data: { categories: [] } });
+        })
+      )
+      .subscribe((response: any) => {
+        if (
+          response &&
+          response.data &&
+          Array.isArray(response.data.categories)
+        ) {
+          this.categories = response.data.categories;
         } else {
-            htmlElement.classList.remove('light');
+          console.warn("Unexpected response structure", response);
+          this.categories = [];
         }
-    }
+      });
+  }
 
-    toggleFilterMenu() {
-        this.isFilterMenuActive = !this.isFilterMenuActive;
-    }
-
-    onCategoryChange(event: Event) {
-        const selectElement = event.target as HTMLSelectElement;
-        const selectedCategory = selectElement.value;
-
-        if (selectedCategory !== null) {
-            this.selectedCategory = selectedCategory;
-            this.onCategorySelect(this.selectedCategory)
-        } else {
-            console.warn("Selected value is null");
-        }
-    }
+  ngOnInit(): void {
+    this.loadCategories();
+  }
 }

@@ -17,17 +17,16 @@ $font-large: 24px;
 
   .product-info {
     max-width: 400px;
-      color: var(--app-content-main-color);
+    color: var(--app-content-main-color);
 
     .product-title {
       font-size: 28px;
       margin-bottom: 16px;
-
     }
 
     .product-description {
       margin-bottom: 16px;
-      color: #ffebeb;;
+      color: #ffebeb;
     }
 
     .product-meta {
@@ -38,7 +37,7 @@ $font-large: 24px;
       li {
         margin-bottom: 8px;
         color: var(--app-content-main-color);
-        
+
         strong {
           margin-right: 8px;
           color: #949494;
@@ -74,7 +73,6 @@ $font-large: 24px;
     color: var(--success-color);
   }
 }
-
 
 .similar-items {
   margin-top: 32px;
