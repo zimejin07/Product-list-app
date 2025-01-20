@@ -13,10 +13,12 @@
 
   .product-info {
     max-width: 400px;
+      color: var(--app-content-main-color);
 
     .product-title {
       font-size: 28px;
       margin-bottom: 16px;
+
     }
 
     .product-description {
@@ -31,10 +33,11 @@
 
       li {
         margin-bottom: 8px;
-
+        color: var(--app-content-main-color);
+        
         strong {
           margin-right: 8px;
-          color: #444;
+          color: #c5c5c5;
         }
       }
     }
@@ -58,6 +61,7 @@
 
 .similar-items {
   margin-top: 32px;
+  color: var(--app-content-main-color);
 
   .similar-items-title {
     margin-bottom: 16px;
@@ -87,7 +91,6 @@
       .similar-item-name {
         font-size: 14px;
         text-align: center;
-        color: #555;
       }
     }
   }

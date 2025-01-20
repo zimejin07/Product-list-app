@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {CommonModule} from "@angular/common";
-import {GraphqlService} from "../graphql.service";
-import {Product} from "../product-model/product-model";
-import {Subscription} from 'rxjs';
-import {ApolloQueryResult} from '@apollo/client/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
+import { CommonModule } from "@angular/common";
+import { GraphqlService } from "../graphql.service";
+import { Product } from "../product-model/product-model";
+import { Subscription } from 'rxjs';
+import { ApolloQueryResult } from '@apollo/client/core';
 import { ApiResponse } from '../product-model/model';
 
 @Component({
@@ -21,47 +21,22 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit, OnDestroy
     private productSubscription!: Subscription;
 
     constructor(private route: ActivatedRoute, private graphqlService: GraphqlService) {
-        this.route.paramMap.subscribe((params) => {
-            this.productId = String(params.get('id'));
-            console.log("SelectedProductID", params.get('id'));
-
-        });
+        this.route.paramMap.subscribe((params) => this.productId = String(params.get('id')));
     }
-
 
     ngOnInit() {
         this.fetchProductDetails();
     }
 
     ngAfterViewInit() {
-        if (this.selectedProduct) {
-            const category = this.selectedProduct.category.name;
-            this.graphqlService.getProducts(category).subscribe({
-                next: (result) => {
-
-                    this.categoryProducts = result.data as Product[];
-                    console.log("Related Category Products", this.categoryProducts);
-
-                }, error: (err) => {
-                    console.error(err);
-                }
-            });
-        } else {
-            // route to home page
-        }
-
     }
 
     fetchProductDetails() {
         this.productSubscription = this.graphqlService.getProductDetails(this.productId).subscribe({
             next: (result: ApolloQueryResult<unknown>) => {
                 const response = result.data as ApiResponse;
-
-                console.log("fetchProduct Details response ", response)
                 this.selectedProduct = response.products[0];
-                console.log("Selected Product Details data ", this.selectedProduct);
-
-
+                this.fetchRelatedProduct(this.selectedProduct.category.name)
             }, error: (err) => {
                 console.error(err);
             }
@@ -72,6 +47,17 @@ export class ProductDetailsComponent implements OnInit, AfterViewInit, OnDestroy
         if (this.productSubscription) {
             this.productSubscription.unsubscribe();
         }
+    }
+
+    private fetchRelatedProduct(category: string) {
+        this.graphqlService.getProducts(category).subscribe({
+            next: (result) => {
+                const response = result.data as ApiResponse;
+                this.categoryProducts = response.products;
+            }, error: (err) => {
+                console.error(err);
+            }
+        });
     }
 
 }
