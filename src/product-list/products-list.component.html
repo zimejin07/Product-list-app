@@ -16,11 +16,11 @@
 @if (selectedProduct()) {
 <div class="modal">
   <div class="modal-content">
-    <app-product-details [selectedProduct]="selectedProduct()">
+    <app-product-details
+      [selectedProduct]="selectedProduct()"
+      (close)="closeModal()"
+    >
     </app-product-details>
-    <h3>{{ selectedProduct()?.title }}</h3>
-    <p>Price: ${{ selectedProduct()?.price }}</p>
-    <button (click)="closeModal()">Close</button>
   </div>
 </div>
 }

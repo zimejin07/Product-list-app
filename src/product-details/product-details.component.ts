@@ -1,9 +1,15 @@
-import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { ActivatedRoute, RouterLink } from "@angular/router";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Product } from "../models/product.model";
 import { interval, Subscription } from "rxjs";
-import { map, switchMap } from "rxjs/operators";
+import { map} from "rxjs/operators";
 
 @Component({
   selector: "app-product-details",
@@ -13,28 +19,15 @@ import { map, switchMap } from "rxjs/operators";
   styleUrls: ["./product-details.component.scss"],
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
-  productId!: string;
   @Input() selectedProduct?: Product | null;
+  @Output() close: EventEmitter<void> = new EventEmitter();
+
   categoryProducts: Product[] = [];
   countdownText: string = "";
 
   private subscriptions = new Subscription();
 
-  constructor(private route: ActivatedRoute) {}
-
   ngOnInit() {
-    this.subscriptions.add(
-      this.route.paramMap
-        .pipe(
-          map((params) => String(params.get("id"))),
-          switchMap((id) => {
-            this.productId = id;
-            return undefined as any;
-          })
-        )
-        .subscribe()
-    );
-
     this.startCountdownToMidnight();
   }
 

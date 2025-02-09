@@ -10,6 +10,7 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
+
 .modal {
   position: fixed;
   top: 0;
@@ -20,13 +21,15 @@
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
+
 .modal-content {
-  background: white;
+  background-color: var(--app-content-secondary-color);
   padding: 20px;
   border-radius: 8px;
-  text-align: center;
 }
+
 button {
   margin-top: 10px;
 }

@@ -19,7 +19,7 @@
         <li><strong>Stock:</strong> {{ product.stock || 'Out of Stock' }}</li>
         <li><strong>Price:</strong> ${{ product.price | number: '1.2-2' }}</li>
       </ul>
-      <button class="btn primary" [disabled]="!product.stock">Buy Now</button>
+      <button (click)="close.emit()" class="btn danger" [disabled]="!product.stock">Close</button>
 
       <div class="countdown" *ngIf="countdownText">
         <p>
