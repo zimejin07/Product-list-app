@@ -1,80 +1,72 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Product } from "../models/product.model";
-import { ProductsComponent } from "../products/products.component";
+import { ProductComponent } from "../product-thumbnail/product.component";
 import { RouterLink } from "@angular/router";
-import { GraphqlService } from "../services/graphql.service";
-import { CategoryService } from "../services/category.service";
-import { Subscription, catchError, EMPTY } from "rxjs";
-import {ApiResponse} from "../models/api.model";
+import { Subscription } from "rxjs";
+import { FavoriteService } from "../services/favourite.service";
+import { ProductService } from "../services/product.service";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { ProductDetailsComponent } from "../product-details/product-details.component";
 
 @Component({
   selector: "app-products-list",
   standalone: true,
-  imports: [CommonModule, ProductsComponent, RouterLink],
+  imports: [CommonModule, ProductComponent, ProductDetailsComponent],
   templateUrl: "./products-list.component.html",
   styleUrls: ["./products-list.component.scss"],
 })
-export class ProductsListComponent implements OnInit, OnDestroy {
-  viewType: "gridView" | "tableView" = "tableView";
-  products: Product[] = [];
+export class ProductsListComponent implements OnDestroy, OnInit {
+  viewType: string = "gridView";
 
-  selectedCategory: string | null = null;
+  selectedCategory = signal<string | null>(null);
+
+  favoriteService = inject(FavoriteService);
+
+  selectedProduct = signal<Product | null>(null);
+
+  products = signal<Product[]>([]);
+
+  productCount = computed(() => this.products().length);
+
+  favoriteCount = computed(() => this.favoriteService.favorites().size);
+
   private categorySubscription: Subscription | undefined;
 
-  constructor(
-    private graphqlService: GraphqlService,
-    private categoryService: CategoryService
-  ) {}
+  private productService = inject(ProductService);
+
+  private destroyRef = inject(DestroyRef);
+
+  toggleFavorite(productId: number): void {
+    this.favoriteService.toggleFavorite(productId);
+  }
 
   ngOnInit() {
-    this.initViewTypeSubscription();
-    this.initCategorySubscription();
-  }
-
-  private initViewTypeSubscription(): void {
-    this.graphqlService.viewType$.pipe(
-      catchError((error) => {
-        console.error("Failed to fetch view type:", error);
-        return EMPTY;
-      })
-    ).subscribe(viewType => this.viewType = viewType as "gridView" | "tableView");
-  }
-
-  private initCategorySubscription(): void {
-    this.categorySubscription = this.categoryService.category$.pipe(
-      catchError((error) => {
-        console.error("Failed to fetch categories:", error);
-        return EMPTY;
-      })
-    ).subscribe(category => {
-      this.selectedCategory = category;
-      this.selectedCategory ? this.fetchProductsByCategory(this.selectedCategory) : this.fetchProducts();
-    });
-  }
-
-  trackByProductName(index: number, product: Product): string {
-    return product.name;
-  }
-
-  private fetchProducts(category?: string): void {
-    this.graphqlService.getProducts(category).pipe(
-      catchError((error) => {
-        console.error("Failed to fetch products:", error);
-        return EMPTY;
-      })
-    ).subscribe(response => {
-      const result = response.data as ApiResponse;
-      this.products = result?.products ?? [];
-    });
-  }
-
-  private fetchProductsByCategory(category: string): void {
-    console.log(`Fetching products for category: ${category}`);
-    this.fetchProducts(category);
+    this.productService
+      .getProducts()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        this.products.set(data);
+      });
   }
 
   ngOnDestroy() {
     this.categorySubscription?.unsubscribe();
+  }
+
+  openModal(product: Product) {
+    this.selectedProduct.set(product);
+  }
+
+  closeModal() {
+    this.selectedProduct.set(null);
   }
 }

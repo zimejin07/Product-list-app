@@ -6,10 +6,10 @@ import { Product } from "../models/product.model";
   selector: "app-product",
   standalone: true,
   imports: [CommonModule],
-  templateUrl: "./products.component.html",
-  styleUrls: ["./products.component.scss"],
+  templateUrl: "./product.component.html",
+  styleUrls: ["./product.component.scss"],
 })
-export class ProductsComponent implements OnChanges {
+export class ProductComponent implements OnChanges {
   private _context: string = "";
 
   @Input()
@@ -34,7 +34,7 @@ export class ProductsComponent implements OnChanges {
       return;
     }
 
-    if (!product.name || typeof product.price !== "number") {
+    if (!product.title || typeof product.price !== "number") {
       console.warn("Product data might be incomplete or invalid.");
     }
   }

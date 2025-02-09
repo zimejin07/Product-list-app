@@ -1,0 +1,46 @@
+<div class="products-row">
+  <button class="cell-more-button">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="feather feather-more-vertical"
+    >
+      <circle cx="12" cy="12" r="1"></circle>
+      <circle cx="12" cy="5" r="1"></circle>
+      <circle cx="12" cy="19" r="1"></circle>
+    </svg>
+  </button>
+
+  <div class="product-cell image">
+    @if(product && product.images.length > 0) {
+    <img [src]="product.thumbnail" [alt]="product.title" />
+    <span>{{ product.title }}</span>
+    } @else {
+    <img src="path/to/default-image.jpg" alt="Default Image" />
+    }
+  </div>
+
+  <div class="product-cell category">
+    <span class="cell-label">Category:</span>{{ product?.category }}
+  </div>
+  <div class="product-cell status-cell">
+    <span class="cell-label">Status:</span>
+    <span [class]="'status available'">Available</span>
+  </div>
+  <div class="product-cell sales">
+    <span class="cell-label">Sales:</span>{{ product?.minimumOrderQuantity }}
+  </div>
+  <div class="product-cell stock">
+    <span class="cell-label">Stock:</span>{{ product?.stock }}
+  </div>
+  <div class="product-cell price">
+    <span class="cell-label">Price:</span>${{ product?.price }}
+  </div>
+</div>

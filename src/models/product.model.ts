@@ -1,26 +1,46 @@
-export enum ProductState {
-  Available = "Available",
-  OutOfStock = "OutOfStock",
-  Discontinued = "Discontinued",
-}
-
-type UrlString = string;
-
-export interface Image {
-  readonly url: UrlString;
-}
-
-export interface Category {
-  readonly name: string;
-}
-
 export interface Product {
-  readonly image: Image;
-  readonly name: string;
-  readonly category: Category;
-  readonly description?: string;
-  readonly state: ProductState;
-  readonly sales: number;
-  readonly stock: number;
-  readonly price: number;
+  id: number;
+  title: string;
+  description: string;
+  category: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  tags: string[];
+  brand: string;
+  sku: string;
+  weight: number;
+  dimensions: {
+    width: number;
+    height: number;
+    depth: number;
+  };
+  warrantyInformation: string;
+  shippingInformation: string;
+  availabilityStatus: string;
+  reviews: {
+    rating: number;
+    comment: string;
+    date: string;
+    reviewerName: string;
+    reviewerEmail: string;
+  }[];
+  returnPolicy: string;
+  minimumOrderQuantity: number;
+  meta: {
+    createdAt: string;
+    updatedAt: string;
+    barcode: string;
+    qrCode: string;
+  };
+  images: string[];
+  thumbnail: string;
+}
+
+export interface ProductList {
+  products: Product[];
+  total: number;
+  skip: number;
+  limit: number;
 }
