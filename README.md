@@ -31,7 +31,6 @@ You are free to use any libraries of your choice.
 ## Setup & Installation
 1. Clone the repository:
    ```sh
-   git clone <repository-url>
    cd <project-folder>
    ```
 2. Install dependencies:
