@@ -36,7 +36,6 @@ export class FavoriteService {
     const data = localStorage.getItem(this.storageKey);
     if (data) {
       try {
-        console.log("loaded favorites", data);
         return JSON.parse(data);
       } catch {
         return [];

@@ -1,5 +1,5 @@
 <div class="products-area-wrapper gridView">
-  @for (product of products(); track product.id) {
+  @for (product of filteredProducts(); track product.id) {
   <app-product [product]="product" (click)="openModal(product)"> </app-product>
 
   } @if (products().length === 0) {
