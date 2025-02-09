@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { Product } from "../models/product.model";
 
@@ -9,19 +9,11 @@ import { Product } from "../models/product.model";
   templateUrl: "./product.component.html",
   styleUrls: ["./product.component.scss"],
 })
-export class ProductComponent implements OnChanges {
+export class ProductComponent {
   @Input() product?: Product;
+  @Input() viewContext?: string | null = null;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes["product"]) {
-      this.validateProduct(changes["product"].currentValue);
-    }
-  }
-
-  private validateProduct(product: Product | undefined): void {
-    if (!product) {
-      console.error("Product input is undefined");
-      return;
-    }
+  get Context() {
+    return this.viewContext != null;
   }
 }
