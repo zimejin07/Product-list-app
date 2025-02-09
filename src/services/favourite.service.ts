@@ -3,12 +3,13 @@ import { Product } from "../models/product.model";
 
 @Injectable({ providedIn: "root" })
 export class FavoriteService {
-    
-  favorites = signal<Product[]>(this.loadFavorites());
+  favorites = signal<Product[]>([]);
 
   private storageKey = "favorites";
 
   constructor() {
+    this.favorites.set(this.loadFavorites());
+
     effect(() => {
       localStorage.setItem(this.storageKey, JSON.stringify(this.favorites()));
     });
@@ -35,6 +36,7 @@ export class FavoriteService {
     const data = localStorage.getItem(this.storageKey);
     if (data) {
       try {
+        console.log("loaded favorites", data);
         return JSON.parse(data);
       } catch {
         return [];

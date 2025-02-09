@@ -3,7 +3,7 @@ import { ProductComponent } from "../product-thumbnail/product.component";
 import { Product } from "../models/product.model";
 import { CommonModule } from "@angular/common";
 import { FavoriteService } from "../services/favourite.service";
-import {ProductDetailsComponent} from "../product-details/product-details.component";
+import { ProductDetailsComponent } from "../product-details/product-details.component";
 
 @Component({
   selector: "app-favorites",

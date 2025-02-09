@@ -24,7 +24,6 @@ import { ProductDetailsComponent } from "../product-details/product-details.comp
   styleUrls: ["./products-list.component.scss"],
 })
 export class ProductsListComponent implements OnDestroy, OnInit {
-
   selectedCategory = signal<string | null>(null);
 
   favoriteService = inject(FavoriteService);
@@ -43,6 +42,7 @@ export class ProductsListComponent implements OnDestroy, OnInit {
 
   toggleFavorite(product: Product | null): void {
     product?.id && this.favoriteService.toggleFavorite(product);
+    this.closeModal();
   }
 
   ngOnInit() {

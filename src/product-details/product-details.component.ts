@@ -9,7 +9,7 @@ import {
 import { CommonModule } from "@angular/common";
 import { Product } from "../models/product.model";
 import { interval, Subscription } from "rxjs";
-import { map} from "rxjs/operators";
+import { map } from "rxjs/operators";
 
 @Component({
   selector: "app-product-details",
