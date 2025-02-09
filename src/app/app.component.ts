@@ -1,14 +1,20 @@
-import { Component, OnInit } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { Component } from "@angular/core";
+import {RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-root",
-  imports: [CommonModule, RouterOutlet],
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+  ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.scss",
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   isLightMode = false;
   isFilterMenuActive = false;
   categories: any[] = [];
@@ -42,6 +48,4 @@ export class AppComponent implements OnInit {
       console.warn("Selected value is null or invalid");
     }
   }
-
-  ngOnInit(): void {}
 }

@@ -40,21 +40,6 @@
         }
       }
     }
-
-    .btn {
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: bold;
-      background: #4caf50;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-
-      &:hover {
-        background: #388e3c;
-      }
-    }
   }
 }
 
@@ -105,4 +90,32 @@
       }
     }
   }
+}
+
+.button-group {
+  display: flex;
+  gap: 10px; 
+}
+
+.btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.danger {
+  background-color: #f44336; 
+  color: white;
+}
+
+.btn:not(.danger) {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn:hover {
+  opacity: 0.9;
 }

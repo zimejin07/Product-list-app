@@ -20,7 +20,9 @@ import { map} from "rxjs/operators";
 })
 export class ProductDetailsComponent implements OnInit, OnDestroy {
   @Input() selectedProduct?: Product | null;
+
   @Output() close: EventEmitter<void> = new EventEmitter();
+  @Output() favorite: EventEmitter<void> = new EventEmitter();
 
   categoryProducts: Product[] = [];
   countdownText: string = "";

@@ -10,16 +10,6 @@ import { Product } from "../models/product.model";
   styleUrls: ["./product.component.scss"],
 })
 export class ProductComponent implements OnChanges {
-  private _context: string = "";
-
-  @Input()
-  set context(value: string) {
-    this._context = value || "default";
-  }
-  get context(): string {
-    return this._context;
-  }
-
   @Input() product?: Product;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -32,10 +22,6 @@ export class ProductComponent implements OnChanges {
     if (!product) {
       console.error("Product input is undefined");
       return;
-    }
-
-    if (!product.title || typeof product.price !== "number") {
-      console.warn("Product data might be incomplete or invalid.");
     }
   }
 }

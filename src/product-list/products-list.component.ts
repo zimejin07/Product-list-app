@@ -10,7 +10,6 @@ import {
 import { CommonModule } from "@angular/common";
 import { Product } from "../models/product.model";
 import { ProductComponent } from "../product-thumbnail/product.component";
-import { RouterLink } from "@angular/router";
 import { Subscription } from "rxjs";
 import { FavoriteService } from "../services/favourite.service";
 import { ProductService } from "../services/product.service";
@@ -25,7 +24,6 @@ import { ProductDetailsComponent } from "../product-details/product-details.comp
   styleUrls: ["./products-list.component.scss"],
 })
 export class ProductsListComponent implements OnDestroy, OnInit {
-  viewType: string = "gridView";
 
   selectedCategory = signal<string | null>(null);
 
@@ -37,16 +35,14 @@ export class ProductsListComponent implements OnDestroy, OnInit {
 
   productCount = computed(() => this.products().length);
 
-  favoriteCount = computed(() => this.favoriteService.favorites().size);
-
   private categorySubscription: Subscription | undefined;
 
   private productService = inject(ProductService);
 
   private destroyRef = inject(DestroyRef);
 
-  toggleFavorite(productId: number): void {
-    this.favoriteService.toggleFavorite(productId);
+  toggleFavorite(product: Product | null): void {
+    product?.id && this.favoriteService.toggleFavorite(product);
   }
 
   ngOnInit() {

@@ -1,12 +1,12 @@
 <div class="product-details-container">
   <ng-container *ngIf="selectedProduct as product">
-      @if (product.thumbnail) {
-          <div class="product-image" *ngIf="product.thumbnail;">
-              <img [alt]="product.title || 'Product Image'" [src]="product.thumbnail" loading="lazy" />
-          </div>
-      } @else {
-          <div class="placeholder-image">No image available</div>
-      }
+    @if (product.thumbnail) {
+    <div class="product-image" *ngIf="product.thumbnail;">
+      <img [alt]="product.title || 'Product Image'" [src]="product.thumbnail" loading="lazy" />
+    </div>
+    } @else {
+    <div class="placeholder-image">No image available</div>
+    }
 
     <div class="product-info">
       <h2 class="product-title">{{ product.title }}</h2>
@@ -19,14 +19,20 @@
         <li><strong>Stock:</strong> {{ product.stock || 'Out of Stock' }}</li>
         <li><strong>Price:</strong> ${{ product.price | number: '1.2-2' }}</li>
       </ul>
-      <button (click)="close.emit()" class="btn danger" [disabled]="!product.stock">Close</button>
-
       <div class="countdown" *ngIf="countdownText">
         <p>
           Order within
           <span class="countdown-timer">{{ countdownText }}</span> to get it delivered tomorrow!
         </p>
       </div>
+
+      <div class="button-group">
+        <button (click)="close.emit();" class="btn danger">Close</button>
+        <button (click)="favorite.emit();" class="btn">Favorite</button>
+      </div>
+
+      
+
     </div>
   </ng-container>
 </div>
