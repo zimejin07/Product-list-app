@@ -1,19 +1,16 @@
-# Make Games Players Love - PlaytestCloud Assessment
-
 ## Project Overview
-You are required to develop a simple Angular application using the [DummyJSON API](https://dummyjson.com/).
-You are free to use any libraries of your choice.
+A simple Angular application using the [DummyJSON API](https://dummyjson.com/).
 
-## Features & Requirements
+## Features
 
 ### 1. Product Listing Page
-- Fetch and display products using the `GET /products` endpoint.
-- Display the following product details in a grid layout:
+- Fetches and displays products using the `GET /products` endpoint.
+- Displays the following product details in a grid layout:
     - **Title**
     - **Price**
     - **Thumbnail**
     - **Rating**
-- Include a dropdown to filter products by category (use the `GET /products/categories` endpoint).
+- Includes a dropdown to filter products by category (use the `GET /products/categories` endpoint).
 
 ### 2. Product Details Modal
 - Clicking on a product opens a modal displaying:
@@ -22,11 +19,11 @@ You are free to use any libraries of your choice.
     - **Stock**
     - **Price**
     - **Images** (use the `images` field from the API)
-- Allow users to add the product to a **Favorites** list.
+- Allows users to add the product to a **Favorites** list.
 
 ### 3. Favorites Page
-- Create a dedicated **Favorites** page.
-- Persist the favorites list locally (e.g., using LocalStorage).
+- A dedicated **Favorites** page.
+- It persist the favorites list locally using LocalStorage.
 
 ## Setup & Installation
 1. Clone the repository:
@@ -50,7 +47,7 @@ You are free to use any libraries of your choice.
 - **LocalStorage** (For persisting favorites)
 
 ## Notes
-- This implementation does not include unit tests or specific responsiveness improvements, as they were not part of the original requirements.
+- This implementation does not include unit tests or specific responsiveness improvements.
 
 ## License
-This project is for assessment purposes only.
+This project is for experimentation purposes only.
